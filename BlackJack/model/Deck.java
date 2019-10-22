@@ -5,46 +5,46 @@ import java.util.LinkedList;
 
 public class Deck {
 
-  private List<Card> m_cards;
+  private List<Card> cards;
   
   public Deck() {
-    m_cards = new LinkedList<Card>();
+    cards = new LinkedList<>();
   
-    for(int cIx = 0; cIx < Card.Color.Count.ordinal(); cIx++) {
-      for (int vIx = 0; vIx < Card.Value.Count.ordinal(); vIx++) {
-        Card c = new Card(Card.Color.values()[cIx], Card.Value.values()[vIx]);
-        AddCard(c);
+    for(int i = 0; i < Card.Color.Count.ordinal(); i++) {
+      for (int j = 0; j < Card.Value.Count.ordinal(); j++) {
+        Card c = new Card(Card.Color.values()[i], Card.Value.values()[j]);
+        addCard(c);
       }
     }
     
-    Shuffle();
+    shuffle();
   }
   
   
-  public void AddCard(Card a_cardToAdd) {
-    m_cards.add(a_cardToAdd);
+  public void addCard(Card newCard) {
+    cards.add(newCard);
   }
   
-  public Card GetCard() {
-    Card c = m_cards.get(0);
-    m_cards.remove(0);
+  public Card getCard() {
+    Card c = cards.get(0);
+    cards.remove(0);
     
     return c;
   }
   
-  public Iterable<Card> GetCards()
+  public Iterable<Card> getCards()
   {
-      return m_cards;
+      return cards;
   }
   
-  private void Shuffle()
+  private void shuffle()
   {
       for (int i = 0; i < 1017; i++)
       {
-          int index = (int)(Math.random() * 171717.0) % m_cards.size();
-          Card c = m_cards.get(index);
-          m_cards.remove(index);
-          AddCard(c);
+          int index = (int)(Math.random() * 171717.0) % cards.size();
+          Card c = cards.get(index);
+          cards.remove(index);
+          addCard(c);
       }
   }
   

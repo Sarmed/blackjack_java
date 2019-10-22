@@ -11,9 +11,9 @@ public class Program
   {
   
     Game g = new Game();
-    IView v = new SimpleView(); //new SwedishView();
+    IView v = new SimpleView();
     PlayGame ctrl = new PlayGame();
     
-    while (ctrl.Play(g, v));
+    while (ctrl.play(g, v));
   }
 }

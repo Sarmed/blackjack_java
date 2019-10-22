@@ -5,30 +5,30 @@ import BlackJack.model.Game;
 
 public class PlayGame {
 
-  public boolean Play(Game a_game, IView a_view) {
-    a_view.DisplayWelcomeMessage();
+  public boolean play(Game game, IView view) {
+    view.displayWelcomeMessage();
     
-    a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
-    a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
+    view.displayDealerHand(game.getDealerHand(), game.getDealerScore());
+    view.displayPlayerHand(game.getPlayerHand(), game.getPlayerScore());
 
-    if (a_game.IsGameOver())
+    if (game.isGameOver())
     {
-        a_view.DisplayGameOver(a_game.IsDealerWinner());
+        view.displayGameOver(game.isDealerWinner());
     }
 
-    int input = a_view.GetInput();
+    int input = view.getInput();
     
     if (input == 'p')
     {
-        a_game.NewGame();
+        game.newGame();
     }
     else if (input == 'h')
     {
-        a_game.Hit();
+        game.hit();
     }
     else if (input == 's')
     {
-        a_game.Stand();
+        game.stand();
     }
 
     return input != 'q';

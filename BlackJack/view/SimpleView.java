@@ -1,16 +1,18 @@
 package BlackJack.view;
 
+import BlackJack.model.Card;
+
 public class SimpleView implements IView 
 {
 
-  public void DisplayWelcomeMessage()
+  public void displayWelcomeMessage()
         {
-          for(int i = 0; i < 50; i++) {System.out.print("\n");}; 
+          for(int i = 0; i < 10; i++) {System.out.print("\n");};
           System.out.println("Hello Black Jack World");
           System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
         }
 
-        public int GetInput()
+        public int getInput()
         {
           try {
             int c = System.in.read();
@@ -24,36 +26,36 @@ public class SimpleView implements IView
           }
         }
 
-        public void DisplayCard(BlackJack.model.Card a_card)
+        public void displayCard(Card card)
         {
-            System.out.println("" + a_card.GetValue() + " of " + a_card.GetColor());
+            System.out.println("" + card.getValue() + " of " + card.getColor());
         }
 
-        public void DisplayPlayerHand(Iterable<BlackJack.model.Card> a_hand, int a_score)
+        public void displayPlayerHand(Iterable<Card> hand, int score)
         {
-            DisplayHand("Player", a_hand, a_score);
+            displayHand("Player", hand, score);
         }
 
-        public void DisplayDealerHand(Iterable<BlackJack.model.Card> a_hand, int a_score)
+        public void displayDealerHand(Iterable<Card> hand, int score)
         {
-            DisplayHand("Dealer", a_hand, a_score);
+            displayHand("Dealer", hand, score);
         }
 
-        private void DisplayHand(String a_name, Iterable<BlackJack.model.Card> a_hand, int a_score)
+        private void displayHand(String name, Iterable<Card> hand, int score)
         {
-            System.out.println(a_name + " Has: ");
-            for(BlackJack.model.Card c : a_hand)
+            System.out.println(name + " Has: ");
+            for(Card c : hand)
             {
-                DisplayCard(c);
+                displayCard(c);
             }
-            System.out.println("Score: " + a_score);
+            System.out.println("Score: " + score);
             System.out.println("");
         }
 
-        public void DisplayGameOver(boolean a_dealerIsWinner)
+        public void displayGameOver(boolean dealerIsWinner)
         {
             System.out.println("GameOver: ");
-            if (a_dealerIsWinner)
+            if (dealerIsWinner)
             {
                 System.out.println("Dealer Won!");
             }

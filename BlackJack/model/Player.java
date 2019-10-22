@@ -5,40 +5,38 @@ import java.util.LinkedList;
 
 public class Player {
 
-  private List<Card> m_hand;
-  protected final int g_maxScore = 21;
+  private List<Card> cardsInHand;
+  protected final int maxScore = 21;
 
   public Player()
   {
-  
-    m_hand = new LinkedList<Card>();
-    System.out.println("Hello List World");
+    cardsInHand = new LinkedList<>();
   }
   
-  public void DealCard(Card a_addToHand)
+  public void dealCard(Card newCard)
   {
-    m_hand.add(a_addToHand);
+    cardsInHand.add(newCard);
   }
   
-  public Iterable<Card> GetHand()
+  public Iterable<Card> getHand()
   {
-    return m_hand;
+    return cardsInHand;
   }
   
-  public void ClearHand()
+  public void clearHand()
   {
-    m_hand.clear();
+    cardsInHand.clear();
   }
   
-  public void ShowHand()
+  public void showHand()
   {
-    for(Card c : GetHand())
+    for(Card c : getHand())
     {
-      c.Show(true);
+      c.show(true);
     }
   }
   
-  public int CalcScore()
+  public int calcScore()
   {
     // the number of scores is dependant on the number of scorable values
     // as it seems there is no way to do this check at compile time in java ?!
@@ -46,23 +44,23 @@ public class Player {
     int cardScores[] = {
         2, 3, 4, 5, 6, 7, 8, 9, 10, 10 ,10 ,10, 11
     };
-    assert (cardScores.length == Card.Value.Count.ordinal()) : "Card Scores array size does not match number of card values";
-  
-    
+    assert (cardScores.length == Card.Value.Count.ordinal()) :
+            "Card Scores array size does not match number of card values";
+
     int score = 0;
 
-    for(Card c : GetHand()) {
-        if (c.GetValue() != Card.Value.Hidden)
+    for(Card c : getHand()) {
+        if (c.getValue() != Card.Value.Hidden)
         {
-            score += cardScores[c.GetValue().ordinal()];
+            score += cardScores[c.getValue().ordinal()];
         }
     }
 
-    if (score > g_maxScore)
+    if (score > maxScore)
     {
-        for(Card c : GetHand())
+        for(Card c : getHand())
         {
-            if (c.GetValue() == Card.Value.Ace && score > g_maxScore)
+            if (c.getValue() == Card.Value.Ace)
             {
                 score -= 10;
             }

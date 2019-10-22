@@ -1,61 +1,75 @@
 package BlackJack.model;
 
+import BlackJack.model.rules.RulesFactory;
+
 public class Game {
 
-  private Dealer m_dealer;
-  private Player m_player;
+  private Dealer dealer;
+  private Player player;
 
   public Game()
   {
-    m_dealer = new Dealer(new BlackJack.model.rules.RulesFactory());
-    m_player = new Player();
+    dealer = new Dealer(new RulesFactory());
+    player = new Player();
   }
     
-    
-  public boolean IsGameOver()
+  public boolean isGameOver()
   {
-    return m_dealer.IsGameOver();
+    return dealer.isGameOver();
   }
   
-  public boolean IsDealerWinner()
+  public boolean isDealerWinner()
   {
-    return m_dealer.IsDealerWinner(m_player);
+    return dealer.isDealerWinner(player);
   }
   
-  public boolean NewGame()
+  public boolean newGame()
   {
-    return m_dealer.NewGame(m_player);
+    return dealer.newGame(player);
   }
   
-  public boolean Hit()
+  public boolean hit()
   {
-    return m_dealer.Hit(m_player);
+    return dealer.hit(player);
   }
   
-  public boolean Stand()
+  public boolean stand()
   {
-    // TODO: Implement this according to Game_Stand.sequencediagram
-    return true;
+    // TODO: Implement this according to Game Stand sequence diagram
+    if(dealer.getDeck() != null) {
+      dealer.showHand();
+      for(Card c : dealer.getHand()) {
+        c.show(true);
+      }
+      while(dealer.getSoft17Rule().doHit(dealer)) {
+        dealer.hit(dealer);
+        Card c = dealer.getDeck().getCard();
+        c.show(true);
+        dealer.dealCard(c);
+      }
+      return true;
+    }
+    return false;
   }
   
-  public Iterable<Card> GetDealerHand()
+  public Iterable<Card> getDealerHand()
   {
-    return m_dealer.GetHand();
+    return dealer.getHand();
   }
   
-  public Iterable<Card> GetPlayerHand()
+  public Iterable<Card> getPlayerHand()
   {
-    return m_player.GetHand();
+    return player.getHand();
   }
   
-  public int GetDealerScore()
+  public int getDealerScore()
   {
-    return m_dealer.CalcScore();
+    return dealer.calcScore();
   }
   
-  public int GetPlayerScore()
+  public int getPlayerScore()
   {
-    return m_player.CalcScore();
+    return player.calcScore();
   }
     
   

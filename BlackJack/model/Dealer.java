@@ -4,58 +4,65 @@ import BlackJack.model.rules.*;
 
 public class Dealer extends Player {
 
-  private Deck m_deck;
-  private INewGameStrategy m_newGameRule;
-  private IHitStrategy m_hitRule;
+  private Deck deck;
+  private INewGameStrategy newGameRule;
+  private IHitStrategy hitRule;
+  private IHitStrategy soft17Rule;
 
-  public Dealer(RulesFactory a_rulesFactory) {
+  public Dealer(RulesFactory rulesFactory) {
   
-    m_newGameRule = a_rulesFactory.GetNewGameRule();
-    m_hitRule = a_rulesFactory.GetHitRule();
-    
-    /*for(Card c : m_deck.GetCards()) {
-      c.Show(true);
-      System.out.println("" + c.GetValue() + " of " + c.GetColor());
-    }    */
+    newGameRule = rulesFactory.getNewGameRule();
+    hitRule = rulesFactory.getHitRule();
+    soft17Rule = rulesFactory.getSoft17Rule();
   }
   
   
-  public boolean NewGame(Player a_player) {
-    if (m_deck == null || IsGameOver()) {
-      m_deck = new Deck();
-      ClearHand();
-      a_player.ClearHand();
-      return m_newGameRule.NewGame(m_deck, this, a_player);   
+  public boolean newGame(Player player) {
+    if (deck == null || isGameOver()) {
+      deck = new Deck();
+      clearHand();
+      player.clearHand();
+      return newGameRule.newGame(deck, this, player);
     }
     return false;
   }
 
-  public boolean Hit(Player a_player) {
-    if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
+  public boolean hit(Player player) {
+    if (deck != null && player.calcScore() < maxScore && !isGameOver()) {
       Card c;
-      c = m_deck.GetCard();
-      c.Show(true);
-      a_player.DealCard(c);
+      c = deck.getCard();
+      c.show(true);
+      player.dealCard(c);
       
       return true;
     }
     return false;
   }
 
-  public boolean IsDealerWinner(Player a_player) {
-    if (a_player.CalcScore() > g_maxScore) {
+  public boolean isDealerWinner(Player player) {
+    if (player.calcScore() > maxScore) {
       return true;
-    } else if (CalcScore() > g_maxScore) {
+    } else if (calcScore() > maxScore) {
       return false;
     }
-    return CalcScore() >= a_player.CalcScore();
+    return calcScore() >= player.calcScore();
   }
 
-  public boolean IsGameOver() {
-    if (m_deck != null && m_hitRule.DoHit(this) != true) {
+  public boolean isGameOver() {
+    if (deck != null && hitRule.doHit(this) != true) {
         return true;
     }
     return false;
+  }
+
+  public Deck getDeck() {
+    return deck;
+  }
+  public IHitStrategy getHitRule() {
+    return hitRule;
+  }
+  public IHitStrategy getSoft17Rule() {
+    return soft17Rule;
   }
   
 }
